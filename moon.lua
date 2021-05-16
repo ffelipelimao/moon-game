@@ -18,7 +18,7 @@ hero = {
 	sprite = 2,
 	speed = 1,
 	weapon = false,
-	weapon = false,
+	attack = false,
 }
 	
 function TIC()
@@ -29,43 +29,49 @@ end
 
 function draw(char)
 	spr(char.sprite,char.x,char.y,0,1,char.direction,0)
-	getOrDropWeapon(char)
+	weapon(char)
 end
 
 function movements()
 	if btn(0) and hero.y > 0 
 		then hero.y = hero.y - hero.speed 
 	  	hero.sprite = 1
-	  	getOrDropWeapon(hero)
+	  	weapon(hero)
     end
 	if btn(1) and hero.y + hero.height < game.height 
 		then hero.y = hero.y + hero.speed
 	  	hero.sprite = 2 
-	  	getOrDropWeapon(hero)
+	  	weapon(hero)
 	end
 	if btn(2) and hero.x > 0 
 		then hero.x = hero.x - hero.speed 
 	  	hero.sprite = 0
 	  	hero.direction = 1
-	  	getOrDropWeapon(hero)
+	  	weapon(hero)
 	end
 	if btn(3) and hero.x + hero.width < game.width 
 		then hero.x = hero.x + hero.speed
 	  	hero.sprite = 0
 	  	hero.direction = 0 
-	  	getOrDropWeapon(hero)
+	  	weapon(hero)
 	end
 	if btn(6) then hero.weapon = true end
 	if btn(7) then hero.weapon = false end
-	if btn(5) and hero.weapon then attack() end
+	if btn(5) and hero.weapon then hero.attack=true end
 end
 
-function getOrDropWeapon(hero)
-	if hero.weapon then 
-		spr(3,hero.x+3,hero.y,0,1,hero.direction,0)			
+function weapon(hero)
+	if hero.weapon and hero.attack == false  then 
+		spr(3,hero.x+3,hero.y,0,1,hero.direction,0) 
+				
+	end 
+
+	if hero.weapon and hero.attack then 
+		spr(3,hero.x+4,hero.y,0,1,hero.direction,-3)
+		hero.attack = false
 	end
 end
 
 function attack()
-	spr(4,hero.x+2,hero.y,0,1,hero.direction,0)
+	
 end
